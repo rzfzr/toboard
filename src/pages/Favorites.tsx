@@ -1,4 +1,4 @@
-import Toggle from '../components/Toggle'
+import Entry from '../components/Entry'
 
 
 export default function FavoritesPage() {
@@ -7,12 +7,11 @@ export default function FavoritesPage() {
 
 
         <>
-            <Toggle color={'red'} isRunning={false} />
-            <Toggle color={'red'} isRunning={false} />
-            <Toggle color={'red'} isRunning={false} />
-            <Toggle color={'red'} isRunning={false} />
-            <Toggle color={'red'} isRunning={false} />
-            <Toggle color={'red'} isRunning={false} />
+            <Entry />
+            <Entry />
+            <Entry />
+            <Entry />
+            <Entry />
             Fav page
 
         </>
