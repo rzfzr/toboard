@@ -1,7 +1,5 @@
 import './App.css';
-
-
-import NavigationBar from './components/layout/NavigationBar'
+import NavigationBar from './components/NavigationBar'
 import { Route, Switch } from 'react-router-dom'
 
 import FavoritesPage from './pages/Favorites'

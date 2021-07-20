@@ -6,7 +6,7 @@ function Goal() {
     return (
         <div>
             <Progress isRunning={true} value={10} color={'red'} />
-            <Toggle isRunning={true} />
+            <Toggle color={'red'} isRunning={true} />
         </div>
     )
 }
