@@ -14,14 +14,12 @@ const BorderLinearProgress = withStyles((theme) => ({
         backgroundColor: '#1a90ff',
     },
 }))(LinearProgress);
-
-function Progress() {
+interface Prop {
+    value: number;
+}
+function Progress(props: Prop) {
     return (
-        <BorderLinearProgress variant="buffer" value={40} valueBuffer={60} />
+        <BorderLinearProgress variant="buffer" value={10} valueBuffer={60} />
     )
 }
-
-
-
-
 export default Progress;
