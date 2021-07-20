@@ -1,13 +1,12 @@
 import Progress from './Progress'
+import Toggle from './Toggle'
 
-// interface Prop {
-//     value: number;
-// }
+
 function Goal() {
     return (
         <div>
             <Progress isRunning={true} value={10} color={'red'} />
-            <Progress isRunning={false} value={20} color={'blue'} />
+            <Toggle isRunning={true} />
         </div>
     )
 }
