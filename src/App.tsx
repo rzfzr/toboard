@@ -1,15 +1,23 @@
 import React from 'react';
 import './App.css';
-import Goal from './components/Goal'
 
-function App() {
+import { Route, Switch } from 'react-router-dom'
+
+import FavoritesPage from './pages/Favorites'
+import GoalsPage from './pages/Goals'
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <Goal />
+    <div>
+      <Switch>
+        <Route path='/' exact>
+          <FavoritesPage />
+        </Route>
+        <Route path='/Goals' >
+          <GoalsPage />
+        </Route>
+      </Switch>
     </div>
   );
 }
 
-export default App;
