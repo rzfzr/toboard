@@ -6,9 +6,8 @@ import Progress from './Progress'
 function Goal() {
     return (
         <div>
-            <Progress value={10} color={'red'} />
-            <Progress value={20} color={'blue'} />
-            <Progress value={30} color={'green'} />
+            <Progress isRunning={true} value={10} color={'red'} />
+            <Progress isRunning={false} value={20} color={'blue'} />
         </div>
     )
 }

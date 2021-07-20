@@ -4,6 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 interface Prop {
     value: number;
     color: string;
+    isRunning: boolean;
 }
 export default function Progress(props: Prop) {
     const BorderLinearProgress = withStyles((theme) => ({
@@ -20,6 +21,6 @@ export default function Progress(props: Prop) {
         },
     }))(LinearProgress);
     return (
-        <BorderLinearProgress variant="buffer" value={props.value} valueBuffer={0} />
+        <BorderLinearProgress variant={props.isRunning ? 'buffer' : 'determinate'} value={props.value} valueBuffer={0} />
     )
 }
