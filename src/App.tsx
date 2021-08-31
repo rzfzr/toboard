@@ -7,6 +7,10 @@ import WeeklyPage from './pages/Weekly'
 import HomePage from './pages/Home';
 
 import TogglClient from "toggl-api";
+import { TogglContext } from './TogglContext';
+import { useState, useMemo } from 'react';
+import { useEffect } from 'react';
+
 const togglClient = new TogglClient({
   apiToken: process.env.REACT_APP_TOGGL_API
 });
@@ -25,49 +29,58 @@ function getPreviousMonday() {
   return prevMonday.toISOString();
 }
 
-export default function App() {
-  function updateProjects(timeEntries: any) {
-    const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
-    let uniqueProjects = Array.from(set);
 
-    console.log("updatingProjects", uniqueProjects);
-    uniqueProjects.forEach((entry) => {
-      togglClient.getProjectData(entry, (err: any, projectData: any) => {
+export default function App() {
+
+  const [entries, setEntries] = useState([{ id: 1 }, { id: 2 }])
+  const providerValue = useMemo(() => ({ entries, setEntries }), [entries, setEntries])
+
+  useEffect(() => {
+    console.log('Rendering App')
+    togglClient.getTimeEntries(
+      getPreviousMonday(),
+      new Date().toISOString(),
+      async (err: any, timeEntries: any) => {
         if (err) {
           console.log("error: ", err);
         } else {
-          projectData.sum = 0;
-          timeEntries.forEach((entry: any) => {
-            if (entry.pid == projectData.id) {
-              if (entry.duration > 0) projectData.sum += entry.duration;
-            }
-          });
-          // this.$store.commit("addProject", projectData);
-          // this.setGoals();
-          console.log('GoalSetting?', projectData)
+          console.log(timeEntries)
+          setEntries(timeEntries)
+          // await this.$store.dispatch("setTimeEntries", timeEntries);
+          // let running = this.$store.state.timeEntries.find(
+          //   (x) => x.duration < 0
+          // );
+          // this.$store.commit("setRunningEntry", running);
+          // updateProjects(timeEntries);
         }
-      });
-    });
-  }
-
-
-  togglClient.getTimeEntries(
-    getPreviousMonday(),
-    new Date().toISOString(),
-    async (err: any, timeEntries: any) => {
-      if (err) {
-        console.log("error: ", err);
-      } else {
-        console.table(timeEntries)
-        // await this.$store.dispatch("setTimeEntries", timeEntries);
-        // let running = this.$store.state.timeEntries.find(
-        //   (x) => x.duration < 0
-        // );
-        // this.$store.commit("setRunningEntry", running);
-        updateProjects(timeEntries);
       }
-    }
-  );
+    );
+  }, [])
+
+
+  // function updateProjects(timeEntries: any) {
+  //   const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
+  //   let uniqueProjects = Array.from(set);
+
+  //   console.log("updatingProjects", uniqueProjects);
+  //   uniqueProjects.forEach((entry) => {
+  //     togglClient.getProjectData(entry, (err: any, projectData: any) => {
+  //       if (err) {
+  //         console.log("error: ", err);
+  //       } else {
+  //         projectData.sum = 0;
+  //         timeEntries.forEach((entry: any) => {
+  //           if (entry.pid == projectData.id) {
+  //             if (entry.duration > 0) projectData.sum += entry.duration;
+  //           }
+  //         });
+  //         // this.$store.commit("addProject", projectData);
+  //         // this.setGoals();
+  //         console.log('GoalSetting?', projectData)
+  //       }
+  //     });
+  //   });
+  // }
 
 
 
@@ -77,15 +90,12 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         <Switch>
-          <Route path='/' exact>
-            <HomePage />
-          </Route>
-          <Route path='/favorites' >
-            <FavoritesPage />
-          </Route>
-          <Route path='/weekly' >
-            <WeeklyPage />
-          </Route>
+          <Route path='/' exact component={HomePage} />
+
+          <TogglContext.Provider value={providerValue}>
+            <Route path='/favorites' component={FavoritesPage} />
+            <Route path='/weekly' component={WeeklyPage} />
+          </TogglContext.Provider>
         </Switch>
         <NavigationBar />
       </header>
