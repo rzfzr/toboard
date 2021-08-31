@@ -1,18 +1,19 @@
 import { useContext } from 'react'
-import Entry from '../components/Entry'
-import NewEntry from '../components/NewEntry'
+import Favorite from '../components/Favorite'
+import NewFavorite from '../components/NewFavorite'
 import { TogglContext } from '../TogglContext'
 
 export default function FavoritesPage() {
     const { entries } = useContext(TogglContext)
+    console.log('hi', entries)
     return (
         <>
             Favorites
             {entries.map(entry => <div>
-                <Entry name={entry.description} />
+                <Favorite entry={entry} />
             </div>)}
             <br />
-            <NewEntry />
+            <NewFavorite />
         </>
     )
 }

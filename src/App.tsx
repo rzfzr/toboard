@@ -20,7 +20,7 @@ function getPreviousMonday() {
   var date = new Date();
   var day = date.getDay();
   var prevMonday = new Date();
-  if (date.getDay() == 0) {
+  if (date.getDay() === 0) {
     prevMonday.setDate(date.getDate() - 7);
   } else {
     prevMonday.setDate(date.getDate() - (day - 1));
@@ -42,9 +42,18 @@ export default function App() {
       new Date().toISOString(),
       async (err: any, timeEntries: any) => {
         if (err) {
-          console.log("error: ", err);
+          console.log("Error getting timeEntries: ", err);
         } else {
-          console.log(timeEntries)
+          console.log("Received timeEntries:", timeEntries)
+          timeEntries.forEach((entry: any) => {
+            entry.isRunning = false
+
+          });
+
+
+
+
+
           setEntries(timeEntries)
           // await this.$store.dispatch("setTimeEntries", timeEntries);
           // let running = this.$store.state.timeEntries.find(
