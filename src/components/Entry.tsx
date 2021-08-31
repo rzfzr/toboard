@@ -1,13 +1,14 @@
 import Toggle from './Toggle'
 
-// interface Props {
+interface Prop {
+    name: string;
+    isRunning?: boolean;
+}
 
-// }
-
-function Entry(props: any) {
+function Entry(props: Prop) {
     return (
         <div>
-            <Toggle color={'red'} isRunning={false} />
+            <Toggle isRunning={false} label={props.name} />
         </div>
     )
 }

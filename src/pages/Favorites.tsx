@@ -9,7 +9,7 @@ export default function FavoritesPage() {
         <>
             Favorites
             {entries.map(entry => <div>
-                <Entry />
+                <Entry name={entry.description} />
             </div>)}
             <br />
             <NewEntry />
