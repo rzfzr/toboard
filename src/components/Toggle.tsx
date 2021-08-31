@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+
 interface Prop {
     color: string;
     isRunning: boolean;

@@ -3,18 +3,22 @@ import NavigationBar from './components/NavigationBar'
 import { Route, Switch } from 'react-router-dom'
 
 import FavoritesPage from './pages/Favorites'
-import GoalsPage from './pages/Goals'
+import WeeklyPage from './pages/Weekly'
+import HomePage from './pages/Home';
 
 export default function App() {
   return (
     <div className="App">
       <header className="App-header">
         <Switch>
-          <Route path='/favorites' exact>
+          <Route path='/' exact>
+            <HomePage />
+          </Route>
+          <Route path='/favorites' >
             <FavoritesPage />
           </Route>
-          <Route path='/goals' >
-            <GoalsPage />
+          <Route path='/weekly' >
+            <WeeklyPage />
           </Route>
         </Switch>
         <NavigationBar />
