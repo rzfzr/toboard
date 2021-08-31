@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 interface Prop {
     color: string;
@@ -36,13 +36,13 @@ function toggle(isRunning: boolean) {
 export default function Toggle(props: Prop) {
     const [isRunning, setRunning] = React.useState(false);
 
-
     const status = isRunning ? 'Stop' : 'Play';
     const handleClick = () => { setRunning(toggle(isRunning)) }
 
     return (
         <Button
-            startIcon={isRunning ? <PauseCircleFilledIcon /> : <PlayCircleFilledIcon />}
+            size="large"
+            startIcon={isRunning ? <PauseCircleFilledIcon fontSize="large" /> : <PlayArrowIcon fontSize="large" />}
             variant="contained" color="primary" onClick={handleClick}>{status}
         </Button>
     )
