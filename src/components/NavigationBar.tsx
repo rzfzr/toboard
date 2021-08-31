@@ -8,8 +8,11 @@ import { AppBar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 export default function SimpleBottomNavigation() {
+    const [value, setValue] = React.useState('/');
     const history = useHistory();
-    const [value, setValue] = React.useState(0);
+    let currentPath = history.location.pathname
+    if (value !== currentPath)
+        setValue(currentPath)
     return (
         <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
             <BottomNavigation
@@ -20,9 +23,10 @@ export default function SimpleBottomNavigation() {
                 }}
                 showLabels
             >
+                location.pathname
                 <BottomNavigationAction label="Home" value="/" icon={<HomeIcon />} />
-                <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-                <BottomNavigationAction label="Weekly Progress" value="weekly" icon={<BarChartIcon />} />
+                <BottomNavigationAction label="Favorites" value="/favorites" icon={<FavoriteIcon />} />
+                <BottomNavigationAction label="Weekly Progress" value="/weekly" icon={<BarChartIcon />} />
             </BottomNavigation>
         </AppBar>
     );
