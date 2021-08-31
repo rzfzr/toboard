@@ -1,4 +1,4 @@
 import { createContext } from "react";
+import { Entry } from "./typings/my-types";
 
-
-export const TogglContext = createContext({ entries: [] as Array<any>, setEntries: {} as unknown });
+export const TogglContext = createContext({ entries: [] as Array<Entry>, setEntries: {} as unknown });

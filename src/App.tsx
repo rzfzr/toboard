@@ -32,7 +32,7 @@ function getPreviousMonday() {
 
 export default function App() {
 
-  const [entries, setEntries] = useState([{ id: 1 }, { id: 2 }])
+  const [entries, setEntries] = useState([])
   const providerValue = useMemo(() => ({ entries, setEntries }), [entries, setEntries])
 
   useEffect(() => {
