@@ -22,19 +22,23 @@ export type Project = {//as given by the api
     active: boolean,
     is_private: boolean,
     template?: boolean,
-    template_id: BigInteger,
+    template_id: integer,
     billable: boolean,
     auto_estimates?: boolean,//premium
     estimated_hours?: integer,//premium
     at: string, //read-only
-    color: string,
+    color?: string,//I assume it to be required, but I don't need it
     rate?: integer, // premium 
     created_at: any,//read-only
+    hex_color: string, //I assume it to be required, it is not documented
+    sum: integer,
 }
 
 export type Goal = {
-    project: Project,//could be optional
+    project: Project,
     entry?: Entry,
     target: integer,
+    // type: 'daily' | 'weekly' | '...',
+    // group?: integer,
 }
 
