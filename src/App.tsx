@@ -10,6 +10,7 @@ import TogglClient from "toggl-api";
 import { TogglContext } from './TogglContext';
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
+import { Entry, Project } from './typings/my-types';
 
 const togglClient = new TogglClient({
   apiToken: process.env.REACT_APP_TOGGL_API
@@ -32,9 +33,14 @@ function getPreviousMonday() {
 
 export default function App() {
 
-  const [entries, setEntries] = useState([])
-  const providerValue = useMemo(() => ({ entries, setEntries }), [entries, setEntries])
-
+  const [entries, setEntries] = useState([] as Array<Entry>)
+  const [projects, setProjects] = useState([] as Array<Project>)
+  const providerValue = useMemo(() => ({
+    entries, setEntries,
+    projects, setProjects,
+  }), [entries, projects]
+  )
+  console.log('inited', entries, projects)
   useEffect(() => {
     console.log('Rendering App')
     togglClient.getTimeEntries(
@@ -46,50 +52,44 @@ export default function App() {
         } else {
           console.log("Received timeEntries:", timeEntries)
           timeEntries.forEach((entry: any) => {
-            entry.isRunning = false
+            entry.isRunning = entry.duration < 0
 
           });
-
-
-
-
-
           setEntries(timeEntries)
-          // await this.$store.dispatch("setTimeEntries", timeEntries);
-          // let running = this.$store.state.timeEntries.find(
-          //   (x) => x.duration < 0
-          // );
-          // this.$store.commit("setRunningEntry", running);
-          // updateProjects(timeEntries);
+          updateProjects(timeEntries);
         }
       }
     );
+    function updateProjects(timeEntries: any) {
+      const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
+      let uniqueProjects = Array.from(set);
+
+      let projects = [] as Array<Project>;
+
+
+      uniqueProjects.forEach((entry) => {
+        togglClient.getProjectData(entry, (err: any, projectData: any) => {
+          if (err) {
+            console.log("error: ", err);
+          } else {
+            projectData.sum = 0;
+            timeEntries.forEach((entry: any) => {
+              if (entry.pid === projectData.id) {
+                if (entry.duration > 0) projectData.sum += entry.duration;
+              }
+            });
+            projects.push(projectData)
+
+            console.log('GoalSetting?', projectData)
+          }
+        });
+      });
+      setProjects(projects)
+    }
   }, [])
 
 
-  // function updateProjects(timeEntries: any) {
-  //   const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
-  //   let uniqueProjects = Array.from(set);
 
-  //   console.log("updatingProjects", uniqueProjects);
-  //   uniqueProjects.forEach((entry) => {
-  //     togglClient.getProjectData(entry, (err: any, projectData: any) => {
-  //       if (err) {
-  //         console.log("error: ", err);
-  //       } else {
-  //         projectData.sum = 0;
-  //         timeEntries.forEach((entry: any) => {
-  //           if (entry.pid == projectData.id) {
-  //             if (entry.duration > 0) projectData.sum += entry.duration;
-  //           }
-  //         });
-  //         // this.$store.commit("addProject", projectData);
-  //         // this.setGoals();
-  //         console.log('GoalSetting?', projectData)
-  //       }
-  //     });
-  //   });
-  // }
 
 
 
