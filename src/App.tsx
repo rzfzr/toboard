@@ -36,12 +36,16 @@ export default function App() {
   const [entries, setEntries] = useState([] as Array<Entry>)
   const [projects, setProjects] = useState([] as Array<Project>)
   const [goals, setGoals] = useState([] as Array<Goal>)
+  const [favorites, setFavorites] = useState([] as Array<Entry>)
+
+
 
   const providerValue = useMemo(() => ({
     entries, setEntries,
     projects, setProjects,
     goals, setGoals,
-  }), [entries, projects, goals]
+    favorites, setFavorites,
+  }), [entries, projects, goals, favorites]
   )
   console.log('inited', entries, projects)
   useEffect(() => {

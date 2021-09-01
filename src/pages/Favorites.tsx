@@ -4,14 +4,15 @@ import NewFavorite from '../components/NewFavorite'
 import { TogglContext } from '../TogglContext'
 
 export default function FavoritesPage() {
-    const { entries, projects } = useContext(TogglContext)
-    console.log('hi', entries, projects)
+    const { favorites } = useContext(TogglContext)
+    console.log('hi', favorites)
 
     return (
         <>
             Favorites
-            {entries.map(entry => <div>
-                <Favorite entry={entry} />
+            {favorites.map(favorite => <div>
+                <h5>{favorite.description} </h5>
+                {/* <Favorite entry={favorite} /> */}
             </div>)}
             <br />
             <NewFavorite />

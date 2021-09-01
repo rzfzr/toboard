@@ -14,6 +14,11 @@ export type Entry = {
     //above this is as given by the api, below are my computed values
     isRunning: boolean,
 }
+export type Favorite = {
+    description: any,
+    project: any,//this should be of Project type
+    position: integer,
+}
 
 export type Project = {//as given by the api
     name: string,
