@@ -5,11 +5,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import { AppBar } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import history from '../history';
 
 export default function SimpleBottomNavigation() {
     const [value, setValue] = React.useState('/');
-    const history = useHistory();
     let currentPath = history.location.pathname
     if (value !== currentPath)
         setValue(currentPath)

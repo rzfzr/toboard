@@ -1,6 +1,8 @@
 import './App.css';
 import NavigationBar from './components/NavigationBar'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Router } from 'react-router-dom'
+
+import history from './history'
 
 import FavoritesPage from './pages/Favorites'
 import WeeklyPage from './pages/Weekly'
@@ -37,9 +39,6 @@ export default function App() {
   const [projects, setProjects] = useState([] as Array<Project>)
   const [goals, setGoals] = useState([] as Array<Goal>)
   const [favorites, setFavorites] = useState([] as Array<Entry>)
-
-
-
   const providerValue = useMemo(() => ({
     entries, setEntries,
     projects, setProjects,
@@ -90,24 +89,16 @@ export default function App() {
     }
   }, [])
 
-
-
-
-
-
-
-
   return (
     <div className="App">
       <header className="App-header">
-        <Switch>
+        <Router history={history}>
           <Route path='/' exact component={HomePage} />
-
           <TogglContext.Provider value={providerValue}>
             <Route path='/favorites' component={FavoritesPage} />
             <Route path='/weekly' component={WeeklyPage} />
           </TogglContext.Provider>
-        </Switch>
+        </Router>
         <NavigationBar />
       </header>
     </div>
