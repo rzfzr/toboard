@@ -39,7 +39,7 @@ export default function NewFavorite(props: any) {
                         aria-label="text primary button group">
                         <Button
                             onClick={() => {
-                                setFavorites([...favorites, { description: description, project: project, position: 0 }])
+                                setFavorites([...favorites, { description: description, project: project, position: favorites.length }])
                                 setEditing(false)
                             }}>Save</Button>
                         <Button

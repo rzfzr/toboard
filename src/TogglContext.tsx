@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Entry, Goal, Project } from "./typings/my-types";
+import { Entry, Goal, Project, Favorite } from "./typings/my-types";
 
 export const TogglContext = createContext({
     entries: [] as Array<Entry>,
@@ -11,6 +11,6 @@ export const TogglContext = createContext({
     goals: [] as Array<Goal>,
     setGoals: {} as unknown,
 
-    favorites: [] as Array<Entry>,
+    favorites: [] as Array<Favorite>,
     setFavorites: (a: any) => { },
 });

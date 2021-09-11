@@ -1,10 +1,8 @@
-import { Entry } from '../typings/my-types'
+import { Favorite } from '../typings/my-types'
 import Toggle from './Toggle'
 
-export default function Favorite(props: { entry: Entry }) {
+export default function FavoriteComponent(props: { favorite: Favorite }) {
     return (
-        <div>
-            <Toggle entry={props.entry} showLabel={true} />
-        </div>
+        <Toggle entry={props.favorite} showLabel={true} />
     )
 }

@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import { Entry } from '../typings/my-types';
+import { Entry, Favorite } from '../typings/my-types';
 interface Prop {
-    entry: Entry;
+    entry: Entry | Favorite;
     showLabel?: boolean;
 }
 function toggle(isRunning: boolean) {
@@ -36,7 +36,7 @@ function toggle(isRunning: boolean) {
 export default function Toggle(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
     // const status = isRunning ? 'Stop' : 'Play';
-    const handleClick = () => { setRunning(toggle(isRunning)) }
+    const handleClick = () => { setRunning(toggle(isRunning || false)) }
 
     return (
         <Button

@@ -18,6 +18,7 @@ export type Favorite = {
     description: any,
     project: any,//this should be of Project type
     position: integer,
+    isRunning?: boolean,
 }
 
 export type Project = {//as given by the api

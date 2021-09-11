@@ -12,7 +12,7 @@ import TogglClient from "toggl-api";
 import { TogglContext } from './TogglContext';
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
-import { Entry, Goal, Project } from './typings/my-types';
+import { Entry, Favorite, Goal, Project } from './typings/my-types';
 
 const togglClient = new TogglClient({
   apiToken: process.env.REACT_APP_TOGGL_API
@@ -38,7 +38,7 @@ export default function App() {
   const [entries, setEntries] = useState([] as Array<Entry>)
   const [projects, setProjects] = useState([] as Array<Project>)
   const [goals, setGoals] = useState([] as Array<Goal>)
-  const [favorites, setFavorites] = useState([] as Array<Entry>)
+  const [favorites, setFavorites] = useState([] as Array<Favorite>)
   const providerValue = useMemo(() => ({
     entries, setEntries,
     projects, setProjects,
