@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { TogglContext } from '../TogglContext';
-import { Entry, Favorite } from '../typings/my-types';
 
 export default function NewFavorite(props: any) {
 
