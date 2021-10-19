@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, collection, addDoc, setDoc } from "firebase/firestore";
+import { Project } from "../typings/my-types";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API,
@@ -13,15 +14,18 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getFirestore();
 
-export const add = async () => {
-    try {
-        const docRef = await addDoc(collection(db, "users"), {
-            first: "Ada",
-            last: "Lovelace",
-            born: 1815
-        });
-        console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-        console.error("Error adding document: ", e);
-    }
+export const sendProjects = async (projects: Array<Project>) => {
+    projects.forEach(async (project) => {
+        try {
+            if (!process.env.REACT_APP_TOGGL_API) return
+
+            await setDoc(doc(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "projects", project.id.toString()), {
+                project
+            });
+            console.log("Project sent");
+
+        } catch (e) {
+            console.error("Error sending project: ", e);
+        }
+    });
 }
