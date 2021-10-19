@@ -20,18 +20,6 @@ export default function Toggle(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
     props.entry.isRunning = isRunning || false
     const handleClick = () => { setRunning(toggle(props.entry)) }
-
-
-    // add()
-    // const docRef = db.collection('users').doc('alovelace');
-
-    // docRef.set({
-    //     first: 'Ada',
-    //     last: 'Lovelace',
-    //     born: 1815
-    // });
-
-
     return (
         <Button
             size="large"

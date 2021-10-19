@@ -40,7 +40,6 @@ export default function App() {
     favorites, setFavorites,
   }), [entries, projects, goals, favorites]
   )
-  console.log('Received entries and projects', entries, projects)
   useEffect(() => {
     console.log('Rendering App')
     togglClient.getTimeEntries(
@@ -63,7 +62,6 @@ export default function App() {
     function updateProjects(timeEntries: any) {
       const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
       let uniqueProjects = Array.from(set).filter(x => x);
-      let projects = [] as Array<Project>;
       uniqueProjects.forEach((entry) => {
         togglClient.getProjectData(entry, (err: any, projectData: any) => {
           if (err) {
@@ -75,11 +73,12 @@ export default function App() {
                 if (entry.duration > 0) projectData.sum += entry.duration;
               }
             });
+            console.log("Received project:", projectData)
             projects.push(projectData)
+            setProjects(projects)
           }
         });
       });
-      setProjects(projects)
     }
   }, [])
 
