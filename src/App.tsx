@@ -52,6 +52,8 @@ export default function App() {
   }), [currentEntry, entries, projects, goals, favorites]
   )
   useEffect(() => {
+    console.log('----------------------current changed to', currentEntry);
+
     localStorage.setItem("currentEntry", JSON.stringify(currentEntry))
   }, [currentEntry])
   useEffect(() => {

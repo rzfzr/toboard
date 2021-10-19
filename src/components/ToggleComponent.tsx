@@ -3,7 +3,11 @@ import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import { Entry, Favorite } from '../typings/my-types';
-import { Toggle } from './CustomClient';
+import { Toggle } from '../modules/CustomClient';
+
+import { useContext } from 'react'
+import { TogglContext } from '../TogglContext'
+
 interface Prop {
     entry: Entry | Favorite;
     showLabel?: boolean;
@@ -11,17 +15,18 @@ interface Prop {
 
 export default function ToggleComponent(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
-    const [isClicked, setClicked] = React.useState(false)
+    const { currentEntry, setCurrentEntry } = useContext(TogglContext)
 
     props.entry.isRunning = isRunning || false
-    const handleClick = () => { setClicked(true) }
+    const handleClick = () => {
+        setRunning(!props.entry.isRunning)
+        Toggle(props.entry, setCurrentEntry);
+    }
 
     useEffect(() => {
-        if (!isClicked) return
-        Toggle(props.entry);
-        setClicked(false)
-        setRunning(!props.entry.isRunning)
-    }, [isClicked])
+        if (!currentEntry) return
+        setRunning(currentEntry.description === props.entry.description)//todo add project checking aswell
+    }, [currentEntry, props.entry.description])
 
     return (
         <Button
