@@ -5,8 +5,9 @@ import { Route, Router } from 'react-router-dom'
 import history from './history'
 
 import FavoritesPage from './pages/Favorites'
-import WeeklyPage from './pages/Weekly'
 import HomePage from './pages/Home';
+import WeeklyPage from './pages/Weekly'
+import SettingsPage from './pages/Settings'
 
 import { TogglContext } from './TogglContext';
 import { useState, useMemo } from 'react';
@@ -90,6 +91,7 @@ export default function App() {
           <TogglContext.Provider value={providerValue}>
             <Route path='/favorites' component={FavoritesPage} />
             <Route path='/weekly' component={WeeklyPage} />
+            <Route path='/settings' component={SettingsPage} />
           </TogglContext.Provider>
         </Router>
         <NavigationBar />

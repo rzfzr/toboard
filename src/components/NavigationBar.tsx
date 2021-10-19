@@ -4,6 +4,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { AppBar } from '@material-ui/core';
 import history from '../history';
 
@@ -26,6 +27,7 @@ export default function SimpleBottomNavigation() {
                 <BottomNavigationAction label="Home" value="/" icon={<HomeIcon />} />
                 <BottomNavigationAction label="Favorites" value="/favorites" icon={<FavoriteIcon />} />
                 <BottomNavigationAction label="Weekly Progress" value="/weekly" icon={<BarChartIcon />} />
+                <BottomNavigationAction label="Settings" value="/settings" icon={<SettingsIcon />} />
             </BottomNavigation>
         </AppBar>
     );

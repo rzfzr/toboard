@@ -23,6 +23,7 @@ export type Favorite = {
 }
 
 export type Project = {//as given by the api
+    id: integer,
     name: string,
     wid: integer,
     cid?: integer,
