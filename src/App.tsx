@@ -40,7 +40,7 @@ export default function App() {
     favorites, setFavorites,
   }), [entries, projects, goals, favorites]
   )
-  console.log('inited', entries, projects)
+  console.log('Received entries and projects', entries, projects)
   useEffect(() => {
     console.log('Rendering App')
     togglClient.getTimeEntries(
@@ -61,13 +61,13 @@ export default function App() {
       }
     );
     function updateProjects(timeEntries: any) {
-      const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid ? item.pid : 0));
-      let uniqueProjects = Array.from(set);
+      const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
+      let uniqueProjects = Array.from(set).filter(x => x);
       let projects = [] as Array<Project>;
       uniqueProjects.forEach((entry) => {
         togglClient.getProjectData(entry, (err: any, projectData: any) => {
           if (err) {
-            console.log("error getting projectData for project: ", entry, err);
+            console.log("Error getting projectData for project: ", entry, err);
           } else {
             projectData.sum = 0;
             timeEntries.forEach((entry: any) => {
