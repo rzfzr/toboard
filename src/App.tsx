@@ -100,9 +100,11 @@ export default function App() {
                 if (entry.duration > 0) projectData.sum += entry.duration;
               }
             });
-            console.log("Received project:", projectData)
-            projects.push(projectData)
-            setProjects(projects)
+            console.log("Received project:", projectData, projects)
+            if (projects.findIndex(p => p.id === projectData.id) === -1) {
+              projects.push(projectData)
+              setProjects(projects)
+            }
           }
         });
       });

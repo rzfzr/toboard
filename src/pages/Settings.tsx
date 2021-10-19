@@ -14,7 +14,7 @@ export default function SettingsPage() {
         <span>
             <h5>Projects</h5>
             {projects.map(project =>
-                <div>{project.name} - {project.id}</div>
+                <div key={project.id}>{project.name} - {project.id}</div>
             )}
             <Button
                 onClick={() => { sendProjects(projects) }}
@@ -28,7 +28,7 @@ export default function SettingsPage() {
         <span>
             <h5>Entries</h5>
             {entries.map(entry =>
-                <div>{entry.description} - {entry.id}</div>
+                <div key={entry.id}>{entry.description} - {entry.id}</div>
             )}
         </span>
 

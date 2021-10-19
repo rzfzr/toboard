@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import Favorite from '../components/Favorite'
 import NewFavorite from '../components/NewFavorite'
 import { TogglContext } from '../TogglContext'
