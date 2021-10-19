@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { getDocs, getFirestore } from "firebase/firestore";
 import { doc, collection, addDoc, setDoc } from "firebase/firestore";
 import { Favorite, Project } from "../typings/my-types";
 
@@ -22,10 +22,10 @@ export const sendProjects = async (projects: Array<Project>) => {
             await setDoc(doc(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "projects", project.id.toString()), {
                 project
             });
-            console.log("Project sent");
+            console.log("Project sent to db");
 
         } catch (e) {
-            console.error("Error sending project: ", e);
+            console.error("Error sending project to db: ", e);
         }
     });
 }
@@ -36,10 +36,10 @@ export const sendFavorites = async (favorites: Array<Favorite>) => {
             let ref = await addDoc(collection(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "favorites"), {
                 project: favorite
             });
-            console.log("Favorite sent: ", ref.id);
+            console.log("Favorite sent to db: ", ref.id);
 
         } catch (e) {
-            console.error("Error sending favorite: ", e);
+            console.error("Error sending favorite to db: ", e);
         }
     });
 }
@@ -57,8 +57,7 @@ export const receiveFavorites = async () => {
     const querySnapshot = await getDocs(collection(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "favorites"));
     let favorites: Array<Favorite> = []
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data().project);
+        console.log("Received favorite from db: ", doc.id, " => ", doc.data().project);
         favorites.push(doc.data().project as Favorite)
     });
 

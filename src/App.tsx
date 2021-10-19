@@ -14,6 +14,7 @@ import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { Entry, Favorite, Goal, Project } from './typings/my-types';
 import { togglClient } from './modules/togglClient';
+import { receiveFavorites } from './modules/firebaseClient';
 
 
 function getPreviousMonday() {
@@ -30,10 +31,15 @@ function getPreviousMonday() {
 }
 
 export default function App() {
-  const [entries, setEntries] = useState([] as Array<Entry>)
-  const [projects, setProjects] = useState([] as Array<Project>)
-  const [goals, setGoals] = useState([] as Array<Goal>)
-  const [favorites, setFavorites] = useState([] as Array<Favorite>)
+  const [entries, setEntries] = useState(
+    () => JSON.parse(localStorage.getItem("entries") || "[]") as Array<Entry>)
+  const [projects, setProjects] = useState(
+    () => JSON.parse(localStorage.getItem("projects") || "[]") as Array<Project>)
+  const [goals, setGoals] = useState(
+    () => JSON.parse(localStorage.getItem("goals") || "[]") as Array<Goal>)
+  const [favorites, setFavorites] = useState(
+    () => JSON.parse(localStorage.getItem("favorites") || "[]") as Array<Favorite>)
+
   const providerValue = useMemo(() => ({
     entries, setEntries,
     projects, setProjects,
@@ -42,7 +48,28 @@ export default function App() {
   }), [entries, projects, goals, favorites]
   )
   useEffect(() => {
+    localStorage.setItem("entries", JSON.stringify(entries))
+  }, [entries])
+  useEffect(() => {
+    console.log('projects changed', projects)
+    localStorage.setItem("projects", JSON.stringify(projects))
+  }, [projects])
+  useEffect(() => {
+    localStorage.setItem("goals", JSON.stringify(goals))
+  }, [goals])
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites))
+  }, [favorites])
+
+  useEffect(() => {
     console.log('Rendering App')
+    if (favorites.length === 0) {
+      (async () => {
+        setFavorites(await receiveFavorites() || [])
+      })()
+    }
+
+
     togglClient.getTimeEntries(
       getPreviousMonday(),
       new Date().toISOString(),
@@ -53,7 +80,6 @@ export default function App() {
           console.log("Received timeEntries:", timeEntries)
           timeEntries.forEach((entry: any) => {
             entry.isRunning = entry.duration < 0
-
           });
           setEntries(timeEntries)
           updateProjects(timeEntries);
