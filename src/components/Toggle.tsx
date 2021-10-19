@@ -3,40 +3,22 @@ import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import { Entry, Favorite } from '../typings/my-types';
+import { customClient } from '../modules/togglClient';
 interface Prop {
     entry: Entry | Favorite;
     showLabel?: boolean;
 }
-function toggle(isRunning: boolean) {
-    console.log('toggling', isRunning)
-    return !isRunning
 
-    // entryDescription, projectID) {
-    // console.log('Togglying: ', entryDescription, projectID);
-    // this.$toggl.getCurrentTimeEntry((err, timeEntry) => {
-    //     if (err) console.log(err);
-    //     else {
-    //         if (timeEntry) {
-    //             console.log("Something already running: ", timeEntry.description, timeEntry.pid);
-    //             console.log("Checking if it is:", entryDescription, projectID);
-    //             if (timeEntry.pid == projectID && timeEntry.description == entryDescription) {
-    //                 console.log('Matched! Stopping');
-    //                 this.stopEntry(timeEntry.id)
-    //             } else {
-    //                 console.log('Not Matched! Starting new');
-    //                 this.createEntry(entryDescription, projectID);
-    //             }
-    //         } else {
-    //             console.log("Nothing running! Starting new");
-    //             this.createEntry(entryDescription, projectID);
-    //         }
-    //     }
-    // });
+function toggle(entry: Entry | Favorite) {
+    console.log('toggling', entry.isRunning)
+    customClient.toggle(entry);
+    return !entry.isRunning
+
 }
 export default function Toggle(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
-    // const status = isRunning ? 'Stop' : 'Play';
-    const handleClick = () => { setRunning(toggle(isRunning || false)) }
+    props.entry.isRunning = isRunning || false
+    const handleClick = () => { setRunning(toggle(props.entry)) }
 
     return (
         <Button

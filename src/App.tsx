@@ -8,15 +8,11 @@ import FavoritesPage from './pages/Favorites'
 import WeeklyPage from './pages/Weekly'
 import HomePage from './pages/Home';
 
-import TogglClient from "toggl-api";
 import { TogglContext } from './TogglContext';
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { Entry, Favorite, Goal, Project } from './typings/my-types';
-
-const togglClient = new TogglClient({
-  apiToken: process.env.REACT_APP_TOGGL_API
-});
+import { togglClient } from './modules/togglClient';
 
 
 function getPreviousMonday() {
@@ -32,9 +28,7 @@ function getPreviousMonday() {
   return prevMonday.toISOString();
 }
 
-
 export default function App() {
-
   const [entries, setEntries] = useState([] as Array<Entry>)
   const [projects, setProjects] = useState([] as Array<Project>)
   const [goals, setGoals] = useState([] as Array<Goal>)
@@ -67,13 +61,13 @@ export default function App() {
       }
     );
     function updateProjects(timeEntries: any) {
-      const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid));
+      const set = new Set(timeEntries.map((item: { pid: any; }) => item.pid ? item.pid : 0));
       let uniqueProjects = Array.from(set);
       let projects = [] as Array<Project>;
       uniqueProjects.forEach((entry) => {
         togglClient.getProjectData(entry, (err: any, projectData: any) => {
           if (err) {
-            console.log("error: ", err);
+            console.log("error getting projectData for project: ", entry, err);
           } else {
             projectData.sum = 0;
             timeEntries.forEach((entry: any) => {

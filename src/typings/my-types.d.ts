@@ -16,6 +16,7 @@ export type Entry = {
 }
 export type Favorite = {
     description: any,
+    pid?: integer
     project: any,//this should be of Project type
     position: integer,
     isRunning?: boolean,
