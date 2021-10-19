@@ -1,14 +1,20 @@
 import { Button } from '@material-ui/core'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import Favorite from '../components/Favorite'
 import NewFavorite from '../components/NewFavorite'
-import { sendFavorites } from '../modules/firebaseClient'
+import { receiveFavorites, sendFavorites } from '../modules/firebaseClient'
 import { TogglContext } from '../TogglContext'
 
 export default function FavoritesPage() {
-    const { favorites } = useContext(TogglContext)
+    const { favorites, setFavorites } = useContext(TogglContext)
+    useEffect(() => {
+        if (favorites.length === 0) {
+            (async () => {
+                setFavorites(await receiveFavorites())
+            })()
+        }
+    }, [])
     console.log('Favorites:', favorites)
-
     return (
         <>
             {favorites.map(favorite =>
