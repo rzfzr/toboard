@@ -13,6 +13,7 @@ export default function FavoritesPage() {
                 setFavorites(await receiveFavorites())
             })()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     console.log('Favorites:', favorites)
     return (

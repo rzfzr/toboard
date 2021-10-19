@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { TogglContext } from '../TogglContext';
+import { sendFavorites } from '../modules/firebaseClient';
 
 export default function NewFavorite(props: any) {
 
@@ -38,7 +39,9 @@ export default function NewFavorite(props: any) {
                         aria-label="text primary button group">
                         <Button
                             onClick={() => {
-                                setFavorites([...favorites, { description: description, project: project, position: favorites.length }])
+                                const fav: any = { description: description, project: project, position: favorites.length }
+                                sendFavorites([fav])
+                                setFavorites([...favorites, fav])
                                 setEditing(false)
                             }}>Save</Button>
                         <Button
