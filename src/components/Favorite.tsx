@@ -1,5 +1,5 @@
 import { Favorite } from '../typings/my-types'
-import Toggle from './Toggle'
+import Toggle from './ToggleComponent'
 
 export default function FavoriteComponent(props: { favorite: Favorite }) {
     return (

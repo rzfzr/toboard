@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import { Entry, Favorite } from '../typings/my-types';
-import { customClient } from '../modules/togglClient';
+import { Toggle } from './CustomClient';
 interface Prop {
     entry: Entry | Favorite;
     showLabel?: boolean;
 }
 
-function toggle(entry: Entry | Favorite) {
-    console.log('toggling', entry.isRunning)
-    customClient.toggle(entry);
-    return !entry.isRunning
-
-}
-export default function Toggle(props: Prop) {
+export default function ToggleComponent(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
+    const [isClicked, setClicked] = React.useState(false)
+
     props.entry.isRunning = isRunning || false
-    const handleClick = () => { setRunning(toggle(props.entry)) }
+    const handleClick = () => { setClicked(true) }
+
+    useEffect(() => {
+        if (!isClicked) return
+        Toggle(props.entry);
+        setClicked(false)
+        setRunning(!props.entry.isRunning)
+    }, [isClicked])
+
     return (
         <Button
             size="large"

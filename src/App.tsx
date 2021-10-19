@@ -31,6 +31,8 @@ function getPreviousMonday() {
 }
 
 export default function App() {
+  const [currentEntry, setCurrentEntry] = useState(
+    () => JSON.parse(localStorage.getItem("currentEntry") || "{}") as Entry)
   const [entries, setEntries] = useState(
     () => JSON.parse(localStorage.getItem("entries") || "[]") as Array<Entry>)
   const [projects, setProjects] = useState(
@@ -40,15 +42,25 @@ export default function App() {
   const [favorites, setFavorites] = useState(
     () => JSON.parse(localStorage.getItem("favorites") || "[]") as Array<Favorite>)
 
+
   const providerValue = useMemo(() => ({
+    currentEntry, setCurrentEntry,
     entries, setEntries,
     projects, setProjects,
     goals, setGoals,
     favorites, setFavorites,
-  }), [entries, projects, goals, favorites]
+  }), [currentEntry, entries, projects, goals, favorites]
   )
   useEffect(() => {
+    localStorage.setItem("currentEntry", JSON.stringify(currentEntry))
+  }, [currentEntry])
+  useEffect(() => {
     localStorage.setItem("entries", JSON.stringify(entries))
+    entries.forEach(entry => {
+      if (entry.isRunning) {
+        setCurrentEntry(entry)
+      }
+    });
   }, [entries])
   useEffect(() => {
     console.log('projects changed', projects)
@@ -68,8 +80,6 @@ export default function App() {
         setFavorites(await receiveFavorites() || [])
       })()
     }
-
-
     togglClient.getTimeEntries(
       getPreviousMonday(),
       new Date().toISOString(),
