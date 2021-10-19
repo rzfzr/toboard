@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { doc, collection, addDoc, setDoc } from "firebase/firestore";
-import { Project } from "../typings/my-types";
+import { Favorite, Project } from "../typings/my-types";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API,
@@ -26,6 +26,20 @@ export const sendProjects = async (projects: Array<Project>) => {
 
         } catch (e) {
             console.error("Error sending project: ", e);
+        }
+    });
+}
+export const sendFavorites = async (favorites: Array<Favorite>) => {
+    favorites.forEach(async (favorite) => {
+        try {
+            if (!process.env.REACT_APP_TOGGL_API) return
+            let ref = await addDoc(collection(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "favorites"), {
+                project: favorite
+            });
+            console.log("Favorite sent: ", ref.id);
+
+        } catch (e) {
+            console.error("Error sending favorite: ", e);
         }
     });
 }
