@@ -23,16 +23,6 @@ export default function FavoritesPage() {
             )}
             <br />
             <NewFavorite />
-            <br />
-            <br />
-            <Button
-                onClick={() => { sendFavorites(favorites) }}
-                size="large"
-                variant="contained"
-                color="primary"
-            >
-                Send favorites to database
-            </Button>
         </>
     )
 }
