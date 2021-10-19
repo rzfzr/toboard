@@ -4,6 +4,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import { Entry, Favorite } from '../typings/my-types';
 import { customClient } from '../modules/togglClient';
+import { add } from '../modules/firebaseClient';
 interface Prop {
     entry: Entry | Favorite;
     showLabel?: boolean;
@@ -19,6 +20,17 @@ export default function Toggle(props: Prop) {
     const [isRunning, setRunning] = React.useState(props.entry.isRunning);
     props.entry.isRunning = isRunning || false
     const handleClick = () => { setRunning(toggle(props.entry)) }
+
+
+    // add()
+    // const docRef = db.collection('users').doc('alovelace');
+
+    // docRef.set({
+    //     first: 'Ada',
+    //     last: 'Lovelace',
+    //     born: 1815
+    // });
+
 
     return (
         <Button
