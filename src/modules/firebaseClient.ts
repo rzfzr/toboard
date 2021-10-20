@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDocs, getFirestore } from "firebase/firestore";
 import { doc, collection, addDoc, setDoc } from "firebase/firestore";
-import { Favorite, Project } from "../typings/my-types";
+import { Favorite, Goal, Project } from "../typings/my-types";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API,
@@ -18,7 +18,6 @@ export const sendProjects = async (projects: Array<Project>) => {
     projects.forEach(async (project) => {
         try {
             if (!process.env.REACT_APP_TOGGL_API) return
-
             await setDoc(doc(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "projects", project.id.toString()), {
                 project
             });
@@ -26,6 +25,20 @@ export const sendProjects = async (projects: Array<Project>) => {
 
         } catch (e) {
             console.error("Error sending project to db: ", e);
+        }
+    });
+}
+export const sendGoals = async (goals: Array<Goal>) => {
+    goals.forEach(async (goal) => {
+        try {
+            if (!process.env.REACT_APP_TOGGL_API) return
+            let ref = await addDoc(collection(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "goals"), {
+                project: goal
+            });
+            console.log("Goal sent to db:", ref.id);
+
+        } catch (e) {
+            console.error("Error sending Goal to db: ", e);
         }
     });
 }

@@ -43,9 +43,12 @@ export type Project = {//as given by the api
 }
 
 export type Goal = {
+    description: string,
     project: Project,
     entry?: Entry,
     target: integer,
+    position: integer,
+    isRunning: boolean
     // type: 'daily' | 'weekly' | '...',
     // group?: integer,
 }

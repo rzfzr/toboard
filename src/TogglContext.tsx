@@ -12,7 +12,7 @@ export const TogglContext = createContext({
     setProjects: {} as unknown,
 
     goals: [] as Array<Goal>,
-    setGoals: {} as unknown,
+    setGoals: (a: any) => { },
 
     favorites: [] as Array<Favorite>,
     setFavorites: (a: any) => { },

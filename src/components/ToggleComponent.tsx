@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import { Entry, Favorite } from '../typings/my-types';
+import { Entry, Favorite, Goal } from '../typings/my-types';
 import { Toggle } from '../modules/CustomClient';
 
 import { useContext } from 'react'
 import { TogglContext } from '../TogglContext'
 
 interface Prop {
-    entry: Entry | Favorite;
+    entry: Entry | Favorite | Goal;
     showLabel?: boolean;
 }
 
