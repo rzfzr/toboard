@@ -1,2 +1,2 @@
-declare module 'toggl-api';
+declare module '@natterstefan/toggl-api';
 declare module 'firebase';
