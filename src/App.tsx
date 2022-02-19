@@ -16,7 +16,6 @@ import { Entry, Favorite, Goal, Project } from './typings/my-types';
 import { togglClient } from './modules/togglClient';
 import { receiveFavorites } from './modules/firebaseClient';
 
-
 function getPreviousMonday() {
   var date = new Date();
   var day = date.getDay();
@@ -41,7 +40,6 @@ export default function App() {
     () => JSON.parse(localStorage.getItem("goals") || "[]") as Array<Goal>)
   const [favorites, setFavorites] = useState(
     () => JSON.parse(localStorage.getItem("favorites") || "[]") as Array<Favorite>)
-
 
   const providerValue = useMemo(() => ({
     currentEntry, setCurrentEntry,

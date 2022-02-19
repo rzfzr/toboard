@@ -1,4 +1,3 @@
-
 import { Button } from '@material-ui/core'
 import { useContext } from 'react'
 import { sendProjects } from '../modules/firebaseClient'

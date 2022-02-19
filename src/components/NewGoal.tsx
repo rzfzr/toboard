@@ -8,7 +8,6 @@ import { TogglContext } from '../TogglContext';
 import { sendGoals } from '../modules/firebaseClient';
 
 export default function NewGoal(props: any) {
-
     const [description, setDescription] = useState('')
     const [project, setProject] = useState('')
     const [target, setTarget] = useState('')

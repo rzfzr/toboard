@@ -58,23 +58,11 @@ export const sendFavorites = async (favorites: Array<Favorite>) => {
 }
 export const receiveFavorites = async () => {
     if (!process.env.REACT_APP_TOGGL_API) return
-    // const docRef = doc(db, "users", process.env.REACT_APP_TOGGL_API.toString());
-    // const docSnap = await getDoc(docRef);
-
-    // if (docSnap.exists()) {
-    //     console.log("Document data:", docSnap.data());
-    // } else {
-    //     // doc.data() will be undefined in this case
-    //     console.log("No such document!");
-    // }
     const querySnapshot = await getDocs(collection(db, "users", process.env.REACT_APP_TOGGL_API.toString(), "favorites"));
     let favorites: Array<Favorite> = []
     querySnapshot.forEach((doc) => {
         console.log("Received favorite from db: ", doc.id, " => ", doc.data().project);
         favorites.push(doc.data().project as Favorite)
     });
-
     return favorites;
-
-
 }

@@ -1,4 +1,3 @@
-
 import { Entry, Favorite } from "../typings/my-types";
 import { togglClient } from './togglClient';
 
